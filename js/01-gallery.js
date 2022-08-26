@@ -1,10 +1,11 @@
 import { galleryItems } from './gallery-items.js';
-// Change code below this line
-console.log(galleryItems);
 
 const galleryCard = document.querySelector('.gallery');
 const galleryImageCard = galleryImageCardMarkup(galleryItems);
+
 galleryCard.insertAdjacentHTML('beforeend', galleryImageCard);
+galleryCard.addEventListener('click', onGalleryShowClick);
+
 
 function galleryImageCardMarkup(galleryItems) {
 	return galleryItems
@@ -23,24 +24,31 @@ function galleryImageCardMarkup(galleryItems) {
 	.join('');
 }
 
-
-galleryCard.addEventListener('click', event => {
+function onGalleryShowClick (event) {
     event.preventDefault();
-    if (event.target.nodeName !== 'IMG') {
+
+    if (!event.target.classList.contains('gallery__image')) {
 		return
 	}
+  const imageSource = event.target.getAttribute('data-source');
+  console.log(imageSource);
 
-    const selectedImage = event.target.getAttribute('data-source')
+  
+const instance = basicLightbox.create(` 
+  <img src = "${imageSource}" >
+  `)
 
-    const instance = basicLightbox.create(`
-    <img src = "${selectedImage}" width="800" height="600">
-`)
+  instance.show(() => console.log('Відкриття модального вікна по кліку'));
 
-    instance.show()
-    
-    galleryCard.addEventListener('keydown', event => {
-		if (event.key === 'Escape') {
-			instance.close()
-		}
-	})
-})
+  window.addEventListener('keydown', onGalleryCloseEsc);
+
+  function onGalleryCloseEsc(event) {
+    const KEY_ESC = "Escape";
+    if (event.key === 'Escape') {
+      instance.close(() => console.log('Закриття модального вікна по Esc'));
+      window.removeEventListener('keydown', onGalleryCloseEsc);
+    }
+  }
+}
+
+console.log(galleryItems);
