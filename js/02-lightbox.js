@@ -3,20 +3,33 @@ import { galleryItems } from './gallery-items.js';
 
 console.log(galleryItems);
 
-const galleryCard = document.querySelector('.gallery')
-const items = []
+const galleryCard = document.querySelector('.gallery');
+const galleryImageCard = galleryImageCardMarkup(galleryItems);
 
-galleryItems.forEach(element => {
-	const galleryItem = document.createElement('a')
-	galleryItem.classList.add('gallery__item');
-	galleryItem.href = element.original
-	const galleryImage = document.createElement('img')
-    galleryImage.classList.add('gallery__image');
-    galleryImage.src = element.preview;
-    galleryImage.alt = element.description;
+galleryCard.insertAdjacentHTML('beforeend', galleryImageCard);
 
-	galleryItem.append(galleryImage)
-	items.push(galleryItem)
+function galleryImageCardMarkup(galleryItems) {
+	return galleryItems
+	.map(({ preview, original, description}) => {
+		return `
+  <a class="gallery__link" href = "${original}" >
+    <img
+      class="gallery__image"
+      src= "${preview}"
+      alt = "${description}" />
+  </a>`;
+	})
+	.join('');
+}
+
+new SimpleLightbox('.gallery a', {
+	captionDelay: 250
+	captionPosition: "${description}"
+
+
 })
 
-galleryCard.append(...items)
+new SimpleLightbox('.gallery a', {
+	captionsData: "${description}",
+	captionDelay: 250,
+});
