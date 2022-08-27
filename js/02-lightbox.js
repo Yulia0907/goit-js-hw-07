@@ -1,12 +1,11 @@
 import { galleryItems } from './gallery-items.js';
-// Change code below this line
-
-console.log(galleryItems);
 
 const galleryCard = document.querySelector('.gallery');
 const galleryImageCard = galleryImageCardMarkup(galleryItems);
 
+
 galleryCard.insertAdjacentHTML('beforeend', galleryImageCard);
+
 
 function galleryImageCardMarkup(galleryItems) {
 	return galleryItems
@@ -22,14 +21,10 @@ function galleryImageCardMarkup(galleryItems) {
 	.join('');
 }
 
-new SimpleLightbox('.gallery a', {
-	captionDelay: 250
-	captionPosition: "${description}"
-
-
-})
 
 new SimpleLightbox('.gallery a', {
-	captionsData: "${description}",
+	captionsData: 'alt',
 	captionDelay: 250,
 });
+
+console.log(galleryItems);

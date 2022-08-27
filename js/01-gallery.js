@@ -3,6 +3,7 @@ import { galleryItems } from './gallery-items.js';
 const galleryCard = document.querySelector('.gallery');
 const galleryImageCard = galleryImageCardMarkup(galleryItems);
 
+
 galleryCard.insertAdjacentHTML('beforeend', galleryImageCard);
 galleryCard.addEventListener('click', onGalleryShowClick);
 
@@ -24,6 +25,7 @@ function galleryImageCardMarkup(galleryItems) {
 	.join('');
 }
 
+
 function onGalleryShowClick (event) {
     event.preventDefault();
 
@@ -38,11 +40,11 @@ const instance = basicLightbox.create(`
   <img src = "${imageSource}" >
   `)
 
-  instance.show(() => console.log('Відкриття модального вікна по кліку'));
+instance.show(() => console.log('Відкриття модального вікна по кліку'));
 
-  window.addEventListener('keydown', onGalleryCloseEsc);
+window.addEventListener('keydown', onGalleryCloseEsc);
 
-  function onGalleryCloseEsc(event) {
+function onGalleryCloseEsc(event) {
     const KEY_ESC = "Escape";
     if (event.key === 'Escape') {
       instance.close(() => console.log('Закриття модального вікна по Esc'));
